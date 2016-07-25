@@ -2,6 +2,7 @@
 - name: Switch to root SSH key path
   set_fact:
     ssh_known_host_file: "{{ ssh_known_host_root_file }}"
+    ssh_known_host_user: "{{ host_root_user }}"
     ssh_known_host_group: "{{ ssh_known_host_root_group }}"
   when: ssh_key_user == host_root_user
 - name: Ensure .ssh directory
