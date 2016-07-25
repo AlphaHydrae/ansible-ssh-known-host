@@ -1,0 +1,6 @@
+---
+ssh_known_host_user: "{{ user }}"
+ssh_known_host_group: "{{ group | default(ssh_known_host_user) }}"
+ssh_known_host_file: "{{ host_user_homes }}/.ssh/known_hosts"
+ssh_known_host_root_group: "{{ group | default(host_root_group) }}"
+ssh_known_host_root_file: "{{ host_root_home }}/.ssh/known_hosts"
