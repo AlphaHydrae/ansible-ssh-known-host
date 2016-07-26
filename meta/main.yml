@@ -20,6 +20,7 @@ galaxy_info:
     - host
     - knownhosts
 
-allow_duplicates: true
+allow_duplicates: yes
+
 dependencies:
   - role: AlphaHydrae.multipass

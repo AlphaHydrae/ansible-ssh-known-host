@@ -1,15 +1,15 @@
 ---
-- name: Switch to root SSH key path
-  set_fact:
-    ssh_known_host_file: "{{ ssh_known_host_root_file }}"
-    ssh_known_host_user: "{{ host_root_user }}"
-    ssh_known_host_group: "{{ ssh_known_host_root_group }}"
-  when: ssh_key_user == host_root_user
-- name: Ensure .ssh directory
-  file: path={{ ssh_known_host_file | dirname }} owner={{ ssh_known_host_user }} group={{ ssh_known_host_group }} mode=0700 state=directory
-- name: Ensure known_hosts file
-  file: path={{ ssh_known_host_file }} owner={{ ssh_known_host_user }} group={{ ssh_known_host_group }} mode=0644 state=touch
-- name: Add known hosts
-  lineinfile: dest={{ ssh_known_host_file }} line="{{ item.host }} {{ item.key }}" regexp="^{{ item.host }}" create=yes owner={{ ssh_known_host_user }} group={{ ssh_known_host_group }} mode=0644 state=present
-  with_items: "{{ ssh_known_hosts }}"
-  when: ssh_known_hosts is defined
+
+- include: ssh-known-host-add.yml
+  vars:
+    ssh_known_host_add_file: "{{ ssh_known_host_file }}"
+    ssh_known_host_add_user: "{{ ssh_known_host_user }}"
+    ssh_known_host_add_group: "{{ ssh_known_host_group }}"
+  when: ssh_known_host_user != host_root_user
+
+- include: ssh-known-host-add.yml
+  vars:
+    ssh_known_host_add_file: "{{ ssh_known_host_root_file }}"
+    ssh_known_host_add_user: "{{ host_root_user }}"
+    ssh_known_host_add_group: "{{ ssh_known_host_root_group }}"
+  when: ssh_known_host_root|bool or ssh_known_host_user == host_root_user
