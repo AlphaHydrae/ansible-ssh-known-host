@@ -1,5 +1,9 @@
 - name: Ensure .ssh directory
   file: path={{ ssh_known_host_add_file | dirname }} owner={{ ssh_known_host_add_user }} group={{ ssh_known_host_add_group }} mode=0700 state=directory
 - name: Add known hosts
-  lineinfile: dest={{ ssh_known_host_add_file }} line="{{ item.host }} {{ item.key }}" regexp="^{{ item.host }}" create=yes owner={{ ssh_known_host_add_user }} group={{ ssh_known_host_add_group }} mode=0644 state=present
+  known_hosts:
+    name: "{{ item.host }}"
+    key: '{{ item.host }} {{ item.key }}'
+    path: "{{ ssh_known_host_add_file }}"
+    state: present
   with_items: "{{ ssh_known_hosts }}"

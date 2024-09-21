@@ -1,13 +1,13 @@
 ---
 
-- include: ssh-known-host-add.yml
+- include_tasks: ssh-known-host-add.yml
   vars:
     ssh_known_host_add_file: "{{ ssh_known_host_file }}"
     ssh_known_host_add_user: "{{ ssh_known_host_user }}"
     ssh_known_host_add_group: "{{ ssh_known_host_group }}"
   when: ssh_known_host_user != host_root_user
 
-- include: ssh-known-host-add.yml
+- include_tasks: ssh-known-host-add.yml
   vars:
     ssh_known_host_add_file: "{{ ssh_known_host_root_file }}"
     ssh_known_host_add_user: "{{ host_root_user }}"
